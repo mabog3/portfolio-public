@@ -1,0 +1,40 @@
+{% extends 'mainTemp.html' %}
+
+{% block title %}
+    <title>Rita Bogdanova-Shapkina Experience</title>
+{% endblock %}
+
+
+{% block header %} 
+<div></div>
+<br>
+{% block headerword %}<div class="album pt-5 pb-1 bg-light"><h1 class="text-center"> Experience </h1> </div>{% endblock %}
+ {% endblock %}
+
+
+ {% block content %}
+ <div class="album pt-3 bg-light min-vh-100">
+
+<div class="container">
+  {% for job in jobs_list.all|dictsortreversed:"endDate" %}
+
+  <h2 class="blog-post-title my-1 py-1">{{job.company}} <small class="text-muted my-0 py-0">{{job.jobTitle}}</small></h2>  
+  <i class="blog-post-meta my-0 py-0"> {{ job.startDate|date:"M Y"}} — {%if job.endDate %}{{ job.endDate|date:"M Y" }}{% else %}Present{% endif %} | 
+    {% for skill in job.skills.all %}
+      {{skill}}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  
+  </i>
+  <ul class="py-2">
+  {% for bullet in job.summary_as_list %}
+    <li> {{bullet}} </li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</div>
+</div>
+ {% endblock %}
+
+ {% block footerhead %}
+        <footer class="footer bg-light mx-0">
+{% endblock %}

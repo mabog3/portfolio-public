@@ -1,0 +1,61 @@
+{% extends 'mainTemp.html' %}
+
+{% block navbar %} 
+  {% with navitems=navitems %}
+    {{ block.super }}  
+  {% endwith %}
+{% endblock %}
+
+{% block header %} 
+    <div></div>
+    <br>
+    <div class="album pt-5 pb-1 bg-light"><h1 class="text-center"> {{proj.title}} </h1> </div> 
+{% endblock %}
+
+{% block content %}
+<div class="album pt-3 bg-light min-vh-100">
+
+<div class="container">
+    <div class="row flex-row align-items-center g-5 py-5">
+        <div class="col-lg-8 order-first">
+            <h2 class="blog-post-title my-1 py-1">{{proj.title}} 
+                <small class="text-muted my-0 py-0">
+                    {% for skill in proj.skills.all %}
+                        {{skill}}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </small>
+            </h2>  
+             <i class="blog-post-meta my-0 py-0"> {{ proj.startDate|date:"M Y"}} — {{ proj.endDate|date:"M Y" }} {% if proj.host.all %} | {% endif %}
+               {% for host in proj.host.all %}
+                 <a class="blog-post-meta my-0 py-0 link-dark" href="{{host.hostLink}}"> {{host.hostText}}</a>{% if not forloop.last %}, {% endif %} 
+               {% endfor %}
+             
+             </i>
+             <div>
+                {{proj.summary}}
+             </div>
+             <ul class="py-2">
+             {% for bullet in proj.bullets_as_list %}
+               <li> {{bullet}} </li>
+               {% endfor %}
+             </ul>
+        </div>
+
+        <div class="col-lg-4 order-last">
+            <img src="{{ proj.image.url }}" height=300 class="d-block mx-2 img-fluid">
+        </div>
+        
+    </div>
+    <p>
+        <a href="{% url 'projects' %}" class="btn btn-primary my-2">Back</a>
+        <!-- <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
+      </p>
+ 
+</div>
+</div>
+{% endblock %}
+
+{% block footerhead %}
+       <footer class="footer bg-light mx-0">
+{% endblock %}

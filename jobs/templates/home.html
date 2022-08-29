@@ -1,0 +1,66 @@
+{% extends 'mainTemp.html' %}
+
+{% block title %}
+    <title>Rita Bogdanova-Shapkina Projects</title>
+{% endblock %}
+
+
+
+{% block header %} 
+  <div></div>
+  <br>
+  <div class="album pt-5 pb-1 bg-light"><h1 class="text-center"> Projects </h1> </div> 
+{% endblock %}
+
+{% block content %}
+
+
+      <div class="album py-5 bg-light min-vh-100">
+        <div class="container">
+
+          <div class="row gy-3">
+            {% for proj in projects_list.all %}
+            <div class="col-md-6 px-4">
+              <div class="card mb-4 box-shadow h-100">
+                <a href="{% url 'projdetail' proj.id %}" style="color:inherit; text-decoration:inherit;">
+                {% if proj.image %}
+                  <img class="card-img-top p-4" height=350 src="{{ proj.image.url }}" alt="{{proj.title}}">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title my-0 py-0">
+                    
+                    {{proj.title}}
+                  </a>
+                  </h5>
+                  <i class="italic">{{ proj.startDate|date:"M Y"}} — {%if proj.endDate %}{{ proj.endDate|date:"M Y" }}{% else %}Present{% endif %}</i>
+                    <p class="card-text py-1">
+                      
+                        {{proj.summary}}
+                      
+                    </p>
+                  <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="flex-wrap">
+                      {% for skill in proj.skills.all %} 
+                        <button type="button" class="btn btn-sm btn-outline-secondary flex-grow-0 mb-1" style="pointer-events:none">{{skill}}</button>
+                      {% endfor %}
+                    </div>
+                    <div class="flex-wrap">
+                      {% for host in proj.host.all %} 
+                        <a href="https://{{host.hostLink}}" class="btn btn-sm btn-outline-primary mb-1">{{host.hostText}}</a> <!--TODO fix hosts to be mult-->
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+
+
+{% block footerhead %}
+        <footer class="footer bg-light mx-0">
+{% endblock %}
